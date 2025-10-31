@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "@/api/axios";
+import api from "@/api/axios";
 
 function normalizeModules(data) {
   if (!data) return [];
@@ -24,11 +24,16 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const { data } = await api.post("/login", { email: email.trim(), password });
+      const { data } = await api.post("https://api.qa.myintelli.net/v1/login", { email: email.trim(), password });
+      
       const { token, user } = data || {};
-      const modules = normalizeModules(data);
+      const modules = normalizeModules(data); 
+      
       if (!token) throw new Error("No vino token");
+      
+      // guardo en localstorage 
       localStorage.setItem("token", token);
+      
       return { token, user, modules };
     } catch (e) {
       return rejectWithValue(e?.response?.data?.msg || "Error de login");

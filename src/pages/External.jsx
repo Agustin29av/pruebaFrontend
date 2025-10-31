@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+
 const Modal = ({ character, onClose }) => (
   <div 
     className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeInUp"
@@ -22,9 +23,9 @@ const Modal = ({ character, onClose }) => (
         </div>
       </div>
 
-      {/* Contenido */}
+
       <div className="p-6 space-y-4">
-       
+        
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-3">
             <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mb-1">Publisher</p>
@@ -92,7 +93,7 @@ const CharacterCard = ({ character, onClick }) => {
       <div className="relative h-64 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 overflow-hidden">
         
         <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
-                        transition-transform duration-700 ${isHovered ? 'translate-x-full' : '-translate-x-full'}`}></div>
+                         transition-transform duration-700 ${isHovered ? 'translate-x-full' : '-translate-x-full'}`}></div>
         
         <img 
           src={character.images?.md} 
@@ -133,7 +134,13 @@ export default function External() {
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(null);
   const [loading, setLoading] = useState(false);
+  
+  
+  const ITEMS_PER_PAGE = 12;
+  
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
+  
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -152,25 +159,41 @@ export default function External() {
     return () => { alive = false; };
   }, []);
 
-  const filtered = items.filter(x =>
+
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [q]);
+
+
+  const allFiltered = items.filter(x =>
     (x.name || "").toLowerCase().includes(q.toLowerCase())
-  ).slice(0, 60);
+  );
+  
+
+  const visibleItems = allFiltered.slice(0, visibleCount);
+
+
+  const hasMore = visibleCount < allFiltered.length;
+
+  const loadMore = () => {
+    setVisibleCount(currentCount => currentCount + ITEMS_PER_PAGE);
+  };
+
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">
             Superhéroes
           </h1>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            {filtered.length} personaje{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''}
+            Mostrando {visibleItems.length} de {allFiltered.length} personaje{allFiltered.length !== 1 ? 's' : ''} encontrado{allFiltered.length !== 1 ? 's' : ''}
           </p>
         </div>
       </div>
 
-      {/* Buscador */}
+      
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -190,6 +213,7 @@ export default function External() {
         />
       </div>
 
+      
       {loading && (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -197,8 +221,9 @@ export default function External() {
         </div>
       )}
 
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filtered.map((char) => (
+        {visibleItems.map((char) => (
           <CharacterCard 
             key={char.id} 
             character={char} 
@@ -207,7 +232,21 @@ export default function External() {
         ))}
       </div>
 
+      
       {open && <Modal character={open} onClose={() => setOpen(null)} />}
+
+      
+      {!loading && hasMore && (
+        <div className="flex justify-center pt-6">
+          <button
+            onClick={loadMore}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+          >
+            Cargar más superhéroes
+          </button>
+        </div>
+      )}
+
     </div>
   );
 }

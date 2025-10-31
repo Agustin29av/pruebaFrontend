@@ -16,9 +16,9 @@ function DevicePagination({ currentPage, totalPages, goToPage, isLoading }) {
     let end = Math.min(totalPages - 1, currentPage + 1);
     if (currentPage <= 3) end = 4;
     else if (currentPage >= totalPages - 2) start = totalPages - 3;
-    if (start > 2) pages.push('...');
+    if (start > 2) pages.push("...");
     for (let i = start; i <= end; i++) pages.push(i);
-    if (end < totalPages - 1) pages.push('...');
+    if (end < totalPages - 1) pages.push("...");
     pages.push(totalPages);
   }
 
@@ -27,15 +27,14 @@ function DevicePagination({ currentPage, totalPages, goToPage, isLoading }) {
       <button
         onClick={() => goToPage(currentPage - 1)}
         disabled={currentPage === 1 || isLoading}
-        className="px-4 py-2 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 
-                   disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        className="px-4 py-2 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
       >
         ← Anterior
       </button>
-      
+
       <div className="flex gap-1">
-        {pages.map((p, index) => (
-          p === '...' ? (
+        {pages.map((p, index) =>
+          p === "..." ? (
             <span key={index} className="px-4 py-2 text-slate-500">...</span>
           ) : (
             <button
@@ -43,22 +42,21 @@ function DevicePagination({ currentPage, totalPages, goToPage, isLoading }) {
               onClick={() => goToPage(p)}
               className={`w-10 h-10 rounded-lg font-medium transition-all ${
                 currentPage === p
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                  : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+                  : "text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
               }`}
               disabled={isLoading}
             >
               {p}
             </button>
           )
-        ))}
+        )}
       </div>
 
       <button
         onClick={() => goToPage(currentPage + 1)}
         disabled={currentPage === totalPages || isLoading}
-        className="px-4 py-2 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 
-                   disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        className="px-4 py-2 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
       >
         Siguiente →
       </button>
@@ -68,9 +66,9 @@ function DevicePagination({ currentPage, totalPages, goToPage, isLoading }) {
 
 function DeviceModal({ device, onClose }) {
   const d = device;
-  
+
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeInUp"
       onClick={onClose}
     >
@@ -81,11 +79,11 @@ function DeviceModal({ device, onClose }) {
         <div className="relative h-48 bg-gradient-to-br from-cyan-500 to-blue-600 overflow-hidden">
           <div className="absolute inset-0 bg-black/20"></div>
           {d.photo && (
-            <img 
-              src={d.photo} 
+            <img
+              src={d.photo}
               alt={d.device_model}
               className="absolute right-0 bottom-0 h-full object-contain opacity-30"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              onError={(e) => { e.currentTarget.style.display = "none"; }}
             />
           )}
           <div className="absolute bottom-4 left-4">
@@ -97,15 +95,16 @@ function DeviceModal({ device, onClose }) {
         </div>
 
         <div className="p-6 space-y-4">
-          {/* Badge de estado */}
           <div className="flex justify-start">
-            <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold
-              ${d.status === 1 
-                ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
-                : 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400'
-              }`}>
-              <span className={`w-2 h-2 rounded-full ${d.status === 1 ? 'bg-green-500 animate-pulse' : 'bg-slate-500'}`}></span>
-              {d.status === 1 ? 'Activo' : 'Inactivo'}
+            <span
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold
+              ${d.status === 1
+                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                : "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400"
+              }`}
+            >
+              <span className={`w-2 h-2 rounded-full ${d.status === 1 ? "bg-green-500 animate-pulse" : "bg-slate-500"}`}></span>
+              {d.status === 1 ? "Activo" : "Inactivo"}
             </span>
           </div>
 
@@ -133,20 +132,20 @@ function DeviceModal({ device, onClose }) {
                 <div className="flex justify-between">
                   <span className="text-slate-600 dark:text-slate-400">Online:</span>
                   <span className="text-slate-800 dark:text-slate-100 font-medium">
-                    {d.settings_device.online === 1 ? 'Sí' : 'No'}
+                    {d.settings_device.online === 1 ? "Sí" : "No"}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600 dark:text-slate-400">Deshabilitado:</span>
                   <span className="text-slate-800 dark:text-slate-100 font-medium">
-                    {d.settings_device.disabled === 1 ? 'Sí' : 'No'}
+                    {d.settings_device.disabled === 1 ? "Sí" : "No"}
                   </span>
                 </div>
               </div>
             </div>
           )}
 
-          <button 
+          <button
             onClick={onClose}
             className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-semibold
                        hover:from-cyan-600 hover:to-blue-700 transition-all duration-300
@@ -172,7 +171,7 @@ function DeviceCard({ device, onClick }) {
   );
 
   return (
-    <div 
+    <div
       className="group relative bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-700 
                  overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-cyan-400 dark:hover:border-cyan-500
                  hover:-translate-y-2 cursor-pointer"
@@ -181,26 +180,25 @@ function DeviceCard({ device, onClick }) {
       onClick={onClick}
     >
       <div className="absolute top-3 right-3 z-10">
-        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm
-          ${d.status === 1 
-            ? 'bg-green-500/90 text-white shadow-lg shadow-green-500/30' 
-            : 'bg-slate-500/90 text-white shadow-lg shadow-slate-500/30'
-          }`}>
-          <span className={`w-2 h-2 rounded-full ${d.status === 1 ? 'bg-white animate-pulse' : 'bg-slate-300'}`}></span>
-          {d.status === 1 ? 'Activo' : 'Inactivo'}
+        <span
+          className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm
+          ${d.status === 1 ? "bg-green-500/90 text-white shadow-lg shadow-green-500/30"
+                           : "bg-slate-500/90 text-white shadow-lg shadow-slate-500/30"}`}
+        >
+          <span className={`w-2 h-2 rounded-full ${d.status === 1 ? "bg-white animate-pulse" : "bg-slate-300"}`}></span>
+          {d.status === 1 ? "Activo" : "Inactivo"}
         </span>
       </div>
 
       <div className="relative h-48 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 
                       flex items-center justify-center overflow-hidden">
-
         <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
-                        transition-transform duration-700 ${isHovered ? 'translate-x-full' : '-translate-x-full'}`}></div>
-        
+                        transition-transform duration-700 ${isHovered ? "translate-x-full" : "-translate-x-full"}`}></div>
+
         {!imgError && d.photo ? (
-          <img 
-            src={d.photo} 
-            alt={d.device_model || 'Dispositivo'}
+          <img
+            src={d.photo}
+            alt={d.device_model || "Dispositivo"}
             className="w-full h-full object-contain p-6 transition-transform duration-300 group-hover:scale-110"
             onError={() => setImgError(true)}
           />
@@ -210,12 +208,10 @@ function DeviceCard({ device, onClick }) {
       </div>
 
       <div className="p-5">
-        {/* Título */}
         <h3 className="font-bold text-lg text-slate-800 dark:text-slate-100 mb-1 truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
           {d.device_name ?? "Sin Nombre"}
         </h3>
 
-        {/* Modelo y Familia */}
         <div className="flex items-center gap-2 mb-3">
           <span className="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-md text-xs text-slate-600 dark:text-slate-300">
             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -230,7 +226,6 @@ function DeviceCard({ device, onClick }) {
           )}
         </div>
 
-        {/* Serial */}
         {d.settings_device?.serial && (
           <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -253,44 +248,37 @@ function DeviceCard({ device, onClick }) {
 
 export default function Devices() {
   const dispatch = useDispatch();
-  const { items, status, more, offset } = useSelector(s => s.devices);
+  const { items, status, more, offset, total } = useSelector((s) => s.devices);
+
   const [query, setQuery] = useState("");
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const ITEMS_PER_PAGE = 5;
 
+  const ITEMS_PER_PAGE = 5;
+  const totalPages = Math.max(1, Math.ceil((total || 0) / ITEMS_PER_PAGE));
+
+  // Al cambiar la query, reseteamos y pedimos desde la página 1 (replace = true)
   useEffect(() => {
     const id = setTimeout(() => {
       dispatch(reset());
       setCurrentPage(1);
-      dispatch(fetchDevices({ limit: ITEMS_PER_PAGE, offset: 0, search: query }))
-        .unwrap()
-        .then((data) => {
-          const total = data?.total || 0;
-          setTotalPages(Math.ceil(total / ITEMS_PER_PAGE) || 1);
-        })
-        .catch(() => setTotalPages(1));
+      dispatch(fetchDevices({ limit: ITEMS_PER_PAGE, offset: 0, search: query, replace: true }));
     }, 400);
     return () => clearTimeout(id);
   }, [query, dispatch]);
 
+  // Paginación numerada: reemplaza la lista (replace = true)
   const goToPage = (page) => {
     if (page < 1 || page > totalPages || status === "loading") return;
     setCurrentPage(page);
     const newOffset = (page - 1) * ITEMS_PER_PAGE;
-    dispatch(fetchDevices({ limit: ITEMS_PER_PAGE, offset: newOffset, search: query }))
-      .unwrap()
-      .then((data) => {
-        const total = data?.total || 0;
-        setTotalPages(Math.ceil(total / ITEMS_PER_PAGE) || 1);
-      })
-      .catch(() => setTotalPages(1));
+    dispatch(fetchDevices({ limit: ITEMS_PER_PAGE, offset: newOffset, search: query, replace: true }));
   };
 
+  // Cargar más: agrega al final (replace = false)
   const loadMore = () => {
     if (!more || status === "loading") return;
-    dispatch(fetchDevices({ limit: ITEMS_PER_PAGE, offset, search: query }));
+    dispatch(fetchDevices({ limit: ITEMS_PER_PAGE, offset, search: query, replace: false }));
   };
 
   return (
@@ -298,16 +286,15 @@ export default function Devices() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">
-            Dispositivos
-          </h1>
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">Dispositivos</h1>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            {items.length} dispositivo{items.length !== 1 ? 's' : ''} encontrado{items.length !== 1 ? 's' : ''}
+            {items.length} dispositivo{items.length !== 1 ? "s" : ""} encontrado{items.length !== 1 ? "s" : ""}
+            {typeof total === "number" && total > 0 ? ` de ${total}` : ""}
           </p>
         </div>
       </div>
 
-      {/* Buscador mejorado */}
+      {/* Buscador */}
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -315,19 +302,14 @@ export default function Devices() {
           </svg>
         </div>
         <input
-          className="w-full pl-12 pr-4 py-3 
-                     bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 
-                     border-2 border-slate-200 dark:border-slate-700 
-                     rounded-xl focus:outline-none focus:ring-2 
-                     focus:ring-cyan-500 focus:border-transparent
-                     transition-all duration-200"
+          className="w-full pl-12 pr-4 py-3 bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
           placeholder="Buscar por nombre, modelo o serial..."
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
 
-      {/* Estados de carga */}
+      {/* Estados */}
       {status === "loading" && items.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -345,42 +327,39 @@ export default function Devices() {
         </div>
       )}
 
-      {/* Grid de dispositivos */}
+      {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {items.map(d => (
-          <DeviceCard 
-            key={d.id_device ?? d.id ?? d.settings_device?.serial} 
+        {items.map((d) => (
+          <DeviceCard
+            key={d.id_device ?? d.id ?? d.settings_device?.serial}
             device={d}
             onClick={() => setSelectedDevice(d)}
           />
         ))}
       </div>
 
-      {/* Modal de detalle */}
+      {/* Modal */}
       {selectedDevice && (
-        <DeviceModal 
-          device={selectedDevice} 
-          onClose={() => setSelectedDevice(null)} 
+        <DeviceModal device={selectedDevice} onClose={() => setSelectedDevice(null)} />
+      )}
+
+      {/* Paginación numerada */}
+      {totalPages > 1 && (
+        <DevicePagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          goToPage={goToPage}
+          isLoading={status === "loading"}
         />
       )}
 
-      {/* Paginación */}
-      <DevicePagination 
-        currentPage={currentPage} 
-        totalPages={totalPages} 
-        goToPage={goToPage} 
-        isLoading={status === "loading"} 
-      />
-
-      {more && totalPages <= 1 && (
+      {/* Fallback “Cargar más” */}
+      {totalPages <= 1 && more && (
         <div className="flex justify-center pt-6">
-          <button 
-            onClick={loadMore} 
-            disabled={status === "loading"} 
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold
-                       hover:from-cyan-600 hover:to-blue-700 transition-all duration-300
-                       disabled:opacity-50 disabled:cursor-not-allowed
-                       transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+          <button
+            onClick={loadMore}
+            disabled={status === "loading"}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
           >
             {status === "loading" ? (
               <span className="flex items-center gap-2">
