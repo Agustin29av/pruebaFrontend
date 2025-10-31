@@ -179,7 +179,7 @@ export default function Login() {
             </button>
 
             <p className="text-center text-xs text-slate-500 dark:text-slate-400 pt-2">
-              Prueba Técnica Frontend © 2024
+              Prueba Técnica Frontend © 2025
             </p>
           </form>
         </div>

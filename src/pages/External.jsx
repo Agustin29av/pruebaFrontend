@@ -139,7 +139,7 @@ export default function External() {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch("https://akabab.github.io/superhero-api/api/all.json");
+        const res = await fetch(`${import.meta.env.VITE_EXT_BASE}/all.json`);
         const data = await res.json();
         if (!alive) return;
         setItems(data);

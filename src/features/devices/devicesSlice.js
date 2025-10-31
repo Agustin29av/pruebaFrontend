@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../api/axios";
+import api from "@/api/axios";
 
 function normalizeDevicesResponse(raw) {
   if (Array.isArray(raw)) return { items: raw, total: raw.length, limit: 8 };
