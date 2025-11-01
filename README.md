@@ -23,8 +23,9 @@ Frontend con **React + Vite + Redux Toolkit + TailwindCSS**.
 ---
 
 ## 🔐 Variables de entorno
-Crear un archivo `.env` en la raíz del proyecto con: "VITE_API_BASE=https://tu-api.example.com"
-
+Crear un archivo .env con:
+VITE_API_BASE=https://api.qa.myintelli.net/v1
+VITE_EXT_BASE=https://akabab.github.io/superhero-api/api
 ---
 
 ## ▶️ Cómo correr el proyecto
